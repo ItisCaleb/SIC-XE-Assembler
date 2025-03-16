@@ -1,0 +1,30 @@
+{
+    "version": 2,
+    "configurePresets": [
+      {
+        "name": "default",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build",
+        "cacheVariables": {
+          "VCPKG_MANIFEST_INSTALL":false,
+          "CMAKE_TOOLCHAIN_FILE": "./vcpkg/scripts/buildsystems/vcpkg.cmake",
+          "CMAKE_BUILD_TYPE":"Debug"
+      }
+      },
+      {
+        "name": "install",
+        "inherits": ["default"],
+        "cacheVariables": {
+          "VCPKG_MANIFEST_INSTALL":true
+        }
+      }
+    ],
+    "buildPresets": [
+      {
+        "name": "default",
+        "configurePreset": "default",
+        "jobs": 4,
+        "targets":["all"]
+      }
+    ]
+  }
