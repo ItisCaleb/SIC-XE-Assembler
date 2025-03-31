@@ -15,6 +15,7 @@ class SICAssembler {
     };
     struct AssembleContext {
         std::vector<SICInstruction> &instructions;
+        std::vector<int> relocation_locs;
         std::map<std::string_view, int> sym_table;
         std::string_view program_name;
         int program_length = 0;

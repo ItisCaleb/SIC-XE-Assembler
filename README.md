@@ -1,4 +1,4 @@
-# SIC Assembler
+# SIC/XE Assembler
 
 ## install dependecies
 ```sh

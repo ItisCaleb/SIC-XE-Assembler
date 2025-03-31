@@ -131,6 +131,7 @@ std::string SICAssembler::gen_instruction(SICInstruction &inst,
                         m_code |= SICAddressingFlag::EXTENDED;
                         m_code <<= 8;
                         m_code += num;
+                        ctx.relocation_locs.push_back(ctx.cur_loc);
                     } else if(!ctx.is_xe){
                         /* SIC mode */
                         m_code += num;
@@ -195,6 +196,11 @@ std::string SICAssembler::assemble(std::vector<SICInstruction> &instructions) {
             int addr = ctx.start_addr;
             if (inst.arg1.length() > 0) {
                 addr = ctx.sym_table[inst.arg1];
+            }
+            if(ctx.is_xe){
+                for(int loc : ctx.relocation_locs){
+                    ctx.result += fmt::format("M{:06X}05\n", loc + 1);
+                }
             }
             ctx.result += fmt::format("E{:06X}\n", addr);
             break;
