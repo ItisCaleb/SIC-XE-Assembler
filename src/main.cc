@@ -21,19 +21,18 @@ int main(int argc, char **argv) {
     f.close();
     asm_file = ss.str();
 
-
     SICParser *parser = SICParser::instance();
     std::string_view asm_view(asm_file);
     std::vector<SICInstruction> instructions;
     bool res = parser->tokenize_all(asm_view, instructions);
-    if(!res){
+    if (!res) {
         fmt::println("There are errors in instructions, stop processing.");
         return 1;
     }
 
     SICAssembler *assembler = SICAssembler::instance();
     std::string result = assembler->assemble(instructions);
-    fmt::println("{}",result);
+    fmt::println("{}", result);
 
     return 0;
 }

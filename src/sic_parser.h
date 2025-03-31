@@ -10,6 +10,10 @@ struct SICInstruction {
     std::string_view arg2;
     int line_num;
     bool should_ignore = false;
+    bool is_extended = false;
+    bool is_imm = false;
+    bool is_indirect = false;
+    bool is_indexing = false;
 };
 
 class SICParser {
