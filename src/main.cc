@@ -5,11 +5,13 @@
 #include <sstream>
 #include <vector>
 
+
 int main(int argc, char **argv) {
     if (argc < 2) {
         fmt::println("Usage: {} <asm file>", argv[0]);
         return 1;
     }
+
     std::ifstream f(argv[1]);
     std::stringstream ss;
     std::string asm_file;
