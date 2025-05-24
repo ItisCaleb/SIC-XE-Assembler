@@ -2,6 +2,7 @@
 #include "sic_table.h"
 #include <sstream>
 #include <fmt/core.h>
+#include <charconv>
 
 SICAssembler *SICAssembler::instance() {
     if (inst == nullptr) {
@@ -10,16 +11,13 @@ SICAssembler *SICAssembler::instance() {
     return inst;
 }
 
-static int stoi(std::string_view s, bool is_hex = false) {
-    std::stringstream ss;
-    int result;
-    if (is_hex) {
-        ss << std::hex << s;
-    } else {
-        ss << std::dec << s;
+static int stoi(std::string_view s, int base = 10) {
+    int result_num;
+    auto result =  std::from_chars(s.data(), s.data() + s.size(), result_num, base);
+    if (result.ec == std::errc::invalid_argument) {
+        return 0;
     }
-    ss >> result;
-    return result;
+    return result_num;
 }
 
 void SICAssembler::handle_symbol(AssembleContext &ctx) {
@@ -30,7 +28,7 @@ void SICAssembler::handle_symbol(AssembleContext &ctx) {
             continue;
         }
         if (inst.op_dir == "START") {
-            ctx.start_addr = stoi(inst.arg1, true);
+            ctx.start_addr = stoi(inst.arg1, 16);
             cur_loc = ctx.start_addr;
         }
         if (inst.op_dir == "END") {

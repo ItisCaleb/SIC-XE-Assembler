@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
 find_package(fmt CONFIG REQUIRED)
+find_package(scn CONFIG REQUIRED)
 
-
-add_subdirectory(src)
+add_subdirectory(asm)
+add_subdirectory(loader)
